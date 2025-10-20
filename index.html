@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Giver: Chapters 1-6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f7fafc;
+            overflow-x: auto;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 20px 30px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #edf2f7;
+            color: #2d3748;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .chapter-content {
+            display: none;
+        }
+
+        .chapter-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        .summary-text {
+            line-height: 1.8;
+            color: #2d3748;
+            font-size: 1.1em;
+            text-align: justify;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .character-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .character-role {
+            font-size: 0.95em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vocab-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .vocab-card:hover {
+            background: #edf2f7;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .vocab-word {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .vocab-definition {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .key-points {
+            background: #fff5f5;
+            border-left: 5px solid #fc8181;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .key-points ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .key-points li {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .tab {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 The Giver</h1>
+            <p class="subtitle">Chapters 1-6 Study Guide</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showChapter(1, this)">Chapter 1</button>
+            <button class="tab" onclick="showChapter(2, this)">Chapter 2</button>
+            <button class="tab" onclick="showChapter(3, this)">Chapter 3</button>
+            <button class="tab" onclick="showChapter(4, this)">Chapter 4</button>
+            <button class="tab" onclick="showChapter(5, this)">Chapter 5</button>
+            <button class="tab" onclick="showChapter(6, this)">Chapter 6</button>
+        </div>
+
+        <div class="content">
+            <!-- Chapter 1 -->
+            <div class="chapter-content active" id="chapter1">
+                <div class="section">
+                    <h2>Chapter 1 Summary</h2>
+                    <p class="summary-text">
+                        Jonas, an eleven-year-old boy, lives in a seemingly perfect community where everything is controlled and organized. He feels anxious about the upcoming December Ceremony, where he will receive his life Assignment. The story begins when Jonas sees a mysterious aircraft flying over the community, which is unusual and frightening for everyone. Later, Jonas talks with his family during their nightly ritual of sharing feelings. His father, a Nurturer who cares for babies, mentions a newchild named Gabriel who isn't developing well. Jonas's younger sister Lily shares her anger about a visiting group of Sevens who didn't follow the rules. Jonas describes his feeling as "apprehensive" about the Ceremony, though he's not scared—just uncertain about his future.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>The community is highly controlled with strict rules</li>
+                            <li>Jonas is nervous about the December Ceremony and his Assignment</li>
+                            <li>Families share their feelings every evening</li>
+                            <li>Jonas's father works as a Nurturer for babies</li>
+                            <li>Jonas's feeling is **apprehensive** (nervous but not scared)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Jonas</div>
+                            <div class="character-role">The eleven-year-old protagonist who is thoughtful and sensitive. He's waiting to receive his Assignment at the December Ceremony.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Father</div>
+                            <div class="character-role">Jonas's father, a gentle Nurturer who takes care of newchildren in the community.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Mother</div>
+                            <div class="character-role">Jonas's mother who works at the Department of Justice.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Lily</div>
+                            <div class="character-role">Jonas's younger sister who is seven years old. She's energetic and speaks her mind.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Apprehensive</div>
+                            <div class="vocab-definition">Feeling worried or nervous about something that might happen in the future.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Assignment</div>
+                            <div class="vocab-definition">The job or role that each person receives at age twelve in the community.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Nurturer</div>
+                            <div class="vocab-definition">A person whose job is to take care of babies and young children.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Newchild</div>
+                            <div class="vocab-definition">A baby or very young child in the community.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Precision of Language</div>
+                            <div class="vocab-definition">The rule of using exactly the right words to express feelings and ideas clearly.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="chapter-content" id="chapter2">
+                <div class="section">
+                    <h2>Chapter 2 Summary</h2>
+                    <p class="summary-text">
+                        Jonas remembers the Ceremony from when Lily became a Seven and received her front-button jacket. He explains how each age group receives something new at the December Ceremony—younger children get new clothing items, while older ones gain more independence. Jonas recalls a significant event from years ago when a girl named Katharine was "released" from the community after being given the wrong Assignment. His parents help him understand that the Committee of Elders carefully observes everyone to choose the right Assignment. They explain that very rarely, someone can apply for release, but this almost never happens. Jonas's mother reassures him that the Elders never make mistakes and that he shouldn't worry. His father mentions again that he's concerned about Gabriel, the newchild who isn't sleeping well at night.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>Each age group receives specific items at the December Ceremony</li>
+                            <li>The **Committee of Elders** observes children carefully before choosing Assignments</li>
+                            <li>Release from the community can happen but is very rare</li>
+                            <li>The concept of release is introduced but not fully explained</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Committee of Elders</div>
+                            <div class="character-role">The group of leaders who observe children and decide their Assignments for the future.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Gabriel (Gabe)</div>
+                            <div class="character-role">A newchild who isn't developing normally and has trouble sleeping at night.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Katharine</div>
+                            <div class="character-role">A girl from the past who was given the wrong Assignment and later released from the community.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Ceremony</div>
+                            <div class="vocab-definition">An important formal event where children receive new items or privileges based on their age.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Release</div>
+                            <div class="vocab-definition">When someone leaves the community permanently (the true meaning is unclear at this point).</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Committee of Elders</div>
+                            <div class="vocab-definition">The group of wise leaders who make important decisions for the community.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Independence</div>
+                            <div class="vocab-definition">The ability to do things on your own without help from others.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Observe</div>
+                            <div class="vocab-definition">To watch carefully to learn about someone's abilities and personality.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="chapter-content" id="chapter3">
+                <div class="section">
+                    <h2>Chapter 3 Summary</h2>
+                    <p class="summary-text">
+                        Jonas watches his father bring Gabriel home from the Nurturing Center. He notices something unusual about the newchild—Gabriel has **pale eyes** like Jonas, which is very rare in the community where most people have dark eyes. While playing catch with Asher, Jonas takes an apple home because he notices something strange about it, though he can't explain what. Later, he hears an announcement reminding the community that taking food home is against the rules. Jonas also remembers an incident where he saw something change about the faces of people in the crowd, similar to what happened with the apple. When Jonas sees Larissa, an old woman, at the House of the Old, Fiona tells him that she'll soon be released in a celebration. Jonas is curious about what happens during release ceremonies but doesn't get complete answers.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>Gabriel and Jonas both have unusual **pale eyes**</li>
+                            <li>Jonas notices something strange about an apple but can't explain it</li>
+                            <li>The community has strict rules about taking food home</li>
+                            <li>Jonas is beginning to see things differently from others</li>
+                            <li>The mystery of release continues to grow</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Asher</div>
+                            <div class="character-role">Jonas's best friend who is clumsy with language and very playful.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Fiona</div>
+                            <div class="character-role">Jonas's friend who has red hair and volunteers at the House of the Old.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Larissa</div>
+                            <div class="character-role">An elderly woman at the House of the Old who will soon be released.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Pale</div>
+                            <div class="vocab-definition">Light in color; Gabriel and Jonas have pale (light) eyes instead of dark ones.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Identical</div>
+                            <div class="vocab-definition">Exactly the same; most people in the community look very similar.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Transgression</div>
+                            <div class="vocab-definition">Breaking a rule or doing something wrong in the community.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Volunteer Hours</div>
+                            <div class="vocab-definition">Time that children spend helping in different areas of the community before receiving their Assignment.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">House of the Old</div>
+                            <div class="vocab-definition">The place where elderly people live in the community.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="chapter-content" id="chapter4">
+                <div class="section">
+                    <h2>Chapter 4 Summary</h2>
+                    <p class="summary-text">
+                        Jonas rides his bicycle to volunteer at the House of the Old with his friend Fiona. He enjoys spending time there, especially with the elderly residents. During his volunteer shift, Jonas helps bathe an old woman named Larissa. While bathing her, Larissa tells Jonas about **Roberto's release ceremony** that happened earlier that morning. She describes it as a wonderful celebration where Roberto's whole life was told through speeches and everyone was happy. At the end, Roberto walked through a special door and was released. Larissa doesn't know what's actually behind that door or where people go when they're released—no one ever comes back to tell about it. Jonas finds this strange but Larissa seems content and doesn't question it. The conversation shows how the community celebrates the elderly, but the mystery of release becomes even more puzzling.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>Jonas volunteers at the House of the Old and enjoys it</li>
+                            <li>Release ceremonies for the elderly are celebrations of their lives</li>
+                            <li>No one knows what actually happens during release</li>
+                            <li>People in the community don't question what they don't know</li>
+                            <li>The community shows respect and care for the elderly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Larissa</div>
+                            <div class="character-role">A friendly elderly woman who tells Jonas about Roberto's release ceremony while he bathes her.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Roberto</div>
+                            <div class="character-role">An old man who was recently released from the community in a celebration ceremony.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Bathing Room</div>
+                            <div class="vocab-definition">The room where the elderly are washed and cared for by volunteers.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Celebration</div>
+                            <div class="vocab-definition">A happy ceremony or party to honor someone; release is treated as a celebration.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Telling</div>
+                            <div class="vocab-definition">The part of a release ceremony where a person's whole life story is shared with everyone.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Nakedness</div>
+                            <div class="vocab-definition">Being without clothes; considered normal for small children and the Old, but shameful for others.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Serene</div>
+                            <div class="vocab-definition">Calm, peaceful, and untroubled; how Larissa describes feeling about release.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="chapter-content" id="chapter5">
+                <div class="section">
+                    <h2>Chapter 5 Summary</h2>
+                    <p class="summary-text">
+                        Jonas wakes up from a confusing dream about his friend Fiona. In the dream, he wanted her to get into a bathtub, and he felt strange feelings that he couldn't understand. During the morning ritual of sharing dreams, Jonas tells his family about it. His parents explain that he's experiencing "**Stirrings**"—the first feelings of physical attraction that happen during adolescence. His mother gives him a **pill** that he must take every morning to stop these feelings. She explains that everyone in the community takes pills to control the Stirrings once they begin. Jonas feels disappointed because the pleasant feelings from his dream will disappear, but he understands this is how things work in his community. His father also shares that Gabriel will be brought to their home at night to see if extra care can help the newchild develop better.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>Jonas experiences his first **Stirrings** (feelings of attraction)</li>
+                            <li>The community controls feelings through **daily pills**</li>
+                            <li>Everyone must take pills once Stirrings begin</li>
+                            <li>Jonas feels sad about losing the pleasant feelings</li>
+                            <li>Gabriel will come to Jonas's home at night for extra care</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Jonas</div>
+                            <div class="character-role">Experiencing his first Stirrings and beginning to notice how much the community controls.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Mother</div>
+                            <div class="character-role">Explains about Stirrings and gives Jonas his first pill to control feelings.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Stirrings</div>
+                            <div class="vocab-definition">The first feelings of physical attraction and desire that happen during adolescence.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Treatment</div>
+                            <div class="vocab-definition">The pills that people take to control Stirrings and other unwanted feelings.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Ritual</div>
+                            <div class="vocab-definition">A regular ceremony or practice; families share dreams and feelings every morning and evening.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Adolescence</div>
+                            <div class="vocab-definition">The time when young people develop from children into adults.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Regulated</div>
+                            <div class="vocab-definition">Controlled by rules or medications; the community regulates feelings and behavior.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="chapter-content" id="chapter6">
+                <div class="section">
+                    <h2>Chapter 6 Summary</h2>
+                    <p class="summary-text">
+                        The December Ceremony finally arrives—a two-day event that celebrates all age groups in the community. Jonas waits nervously for his turn, becoming more anxious as the Chief Elder moves through the Elevens. He watches as Asher receives his Assignment as **Assistant Director of Recreation**. Then something shocking happens: the Chief Elder **skips Jonas completely**! She calls out "Nineteen" then "Twenty," leaving Jonas's number—Nineteen—missing. Jonas sits in terrible **uncertainty**, feeling humiliated and frightened, while the ceremony continues without him. Everyone in the auditorium notices his exclusion, and Jonas wonders what terrible mistake has caused him to be overlooked.
+                    </p>
+                    <div class="key-points">
+                        <h3>Key Points</h3>
+                        <ul>
+                            <li>The December Ceremony is the community's biggest annual event</li>
+                            <li>Each age group receives something that shows growing maturity</li>
+                            <li>Asher becomes **Assistant Director of Recreation**</li>
+                            <li>**Jonas is mysteriously skipped** during the Assignment ceremony</li>
+                            <li>Jonas feels humiliated and scared about being left out</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Characters</h2>
+                    <div class="character-grid">
+                        <div class="character-card">
+                            <div class="character-name">Chief Elder</div>
+                            <div class="character-role">The leader who gives Assignments at the December Ceremony and skips Jonas mysteriously.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Asher</div>
+                            <div class="character-role">Jonas's best friend who receives the Assignment of Assistant Director of Recreation.</div>
+                        </div>
+                        <div class="character-card">
+                            <div class="character-name">Madeline</div>
+                            <div class="character-role">A female Eleven who receives the Assignment of Fish Hatchery Attendant.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Important Vocabulary</h2>
+                    <div class="vocab-grid">
+                        <div class="vocab-card">
+                            <div class="vocab-word">Auditorium</div>
+                            <div class="vocab-definition">A large room where the whole community gathers for the December Ceremony.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Chief Elder</div>
+                            <div class="vocab-definition">The most important leader in the community who announces Assignments.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Humiliation</div>
+                            <div class="vocab-definition">Feeling deeply embarrassed or ashamed in front of others.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Excluded</div>
+                            <div class="vocab-definition">Left out or not included with everyone else.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Bewilderment</div>
+                            <div class="vocab-definition">Complete confusion about what is happening; Jonas feels bewildered when he's skipped.</div>
+                        </div>
+                        <div class="vocab-card">
+                            <div class="vocab-word">Assistant Director of Recreation</div>
+                            <div class="vocab-definition">Asher's Assignment; he will help organize games and fun activities for the community.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showChapter(chapterNum, clickedButton) {
+            // 1. Hide all chapter contents
+            const contents = document.querySelectorAll('.chapter-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 2. Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // 3. Show selected chapter content
+            const chapterContent = document.getElementById('chapter' + chapterNum);
+            if (chapterContent) {
+                chapterContent.classList.add('active');
+            }
+            
+            // 4. Highlight the active tab (using the passed element)
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+            
+            // 5. Scroll to top for better UX
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize: Ensure the first tab's content is shown on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialChapterContent = document.getElementById('chapter1');
+            if (initialChapterContent && !initialChapterContent.classList.contains('active')) {
+                initialChapterContent.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
